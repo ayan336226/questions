@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yes/No Questionnaire</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      min-height: 60px;
+    }
+
+    .options {
+      margin-bottom: 20px;
+    }
+
+    .options label {
+      display: inline-block;
+      background: #fff;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 25px;
+      margin: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .options input {
+      display: none;
+    }
+
+    .options input:checked + label {
+      background: #00c9a7;
+      color: #fff;
+    }
+
+    .btn {
+      background: #00c9a7;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00a187;
+    }
+
+    .result {
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="questionBox" class="question">Loading question...</div>
+
+    <div class="options">
+      <input type="radio" id="yes" name="answer" value="Yes">
+      <label for="yes">Yes</label>
+      <input type="radio" id="no" name="answer" value="No">
+      <label for="no">No</label>
+    </div>
+
+    <button class="btn" id="nextBtn">Next</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      "Love karti h kise se? 😅 sorry but answer de",
+      "Shaadi karna chahti h?",
+      "Ayaan se kya 😁?",
+    
+    ];
+
+    let currentQuestion = 0;
+    const questionBox = document.getElementById("questionBox");
+    const nextBtn = document.getElementById("nextBtn");
+    const resultBox = document.getElementById("result");
+
+    function loadQuestion() {
+      if (currentQuestion < questions.length) {
+        questionBox.textContent = questions[currentQuestion];
+        document.querySelectorAll('input[name="answer"]').forEach(el => el.checked = false);
+      } else {
+        questionBox.style.display = "none";
+        document.querySelector(".options").style.display = "none";
+        nextBtn.style.display = "none";
+        resultBox.textContent = "Sho bas me apse naraz huun😥";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      const selected = document.querySelector('input[name="answer"]:checked');
+      if (!selected) {
+        alert("Please select Yes or No before continuing!");
+        return;
+      }
+      currentQuestion++;
+      loadQuestion();
+    });
+
+    loadQuestion();
+  </script>
+</body>
+</html>
